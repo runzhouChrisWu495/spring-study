@@ -57,8 +57,8 @@
                 【BeanPostProcessor 是在Bean对象创建完成初始化前后被调用的】
                 【InstantiationAwareBeanPostProcessor 是在创建Bean实例之前先尝试用后置处理器返回对象的】
                 1.resolveBeforeInstantiation(beanName,mbdToUse); 解析resolveBeforeInstantiation
-                    希望后置处理器在此能返回一个代理对象，如果能返回代理对象，就是用，如果不能就继续第二步
-                    1.后置处理器尝试先返回对象
+                    希望后置处理器在此能返回一个代理对象，如果能返回代理对象，就用，如果不能就继续第二步
+                    1.后置处理器尝试先返回对象(这里主要是为了判断bean是否需要跳过代理，如果这个bean是切面类的话，就不用代理直接第2步，如果如果没有 beanclass 所对应的 targetsource的话，也一样不会代理的）
                         bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName);
                             拿到所有后置处理器，如果是 InstantiationAwareBeanPostProcessor;【新版本不判断直接执行】 就执行 Object result = bp.postProcessBeforeInstantiation(beanClass, beanName);
                         if (bean != null) {
